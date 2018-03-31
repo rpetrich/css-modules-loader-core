@@ -32,33 +32,27 @@ export default class FileSystemLoader {
   fetch( _newPath, relativeTo, _trace ) {
     let newPath = _newPath.replace( /^["']|["']$/g, "" ),
       trace = _trace || String.fromCharCode( this.importNr++ )
-    return new Promise( ( resolve, reject ) => {
-      let relativeDir = path.dirname( relativeTo ),
-        rootRelativePath = path.resolve( relativeDir, newPath ),
-        fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
+    let relativeDir = path.dirname( relativeTo ),
+      rootRelativePath = path.resolve( relativeDir, newPath ),
+      fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
 
-      // if the path is not relative or absolute, try to resolve it in node_modules
-      if (newPath[0] !== '.' && newPath[0] !== '/') {
-        try {
-          fileRelativePath = require.resolve(newPath);
-        }
-        catch (e) {}
+    // if the path is not relative or absolute, try to resolve it in node_modules
+    if (newPath[0] !== '.' && newPath[0] !== '/') {
+      try {
+        fileRelativePath = require.resolve(newPath);
       }
+      catch (e) {}
+    }
 
-      const tokens = this.tokensByFile[fileRelativePath]
-      if (tokens) { return resolve(tokens) }
+    const tokens = this.tokensByFile[fileRelativePath]
+    if (tokens) { return tokens; }
 
-      fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
-        if ( err ) reject( err )
-        this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
-          .then( ( { injectableSource, exportTokens } ) => {
-            this.sources[fileRelativePath] = injectableSource
-            this.traces[trace] = fileRelativePath
-            this.tokensByFile[fileRelativePath] = exportTokens
-            resolve( exportTokens )
-          }, reject )
-      } )
-    } )
+    const source = fs.readFileSync( fileRelativePath, "utf-8" );
+    const { injectableSource, exportTokens } = this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
+    this.sources[fileRelativePath] = injectableSource
+    this.traces[trace] = fileRelativePath
+    this.tokensByFile[fileRelativePath] = exportTokens
+    return exportTokens;
   }
 
   get finalSource() {

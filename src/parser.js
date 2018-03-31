@@ -11,9 +11,9 @@ export default class Parser {
   }
 
   plugin( css, result ) {
-    return Promise.all( this.fetchAllImports( css ) )
-      .then( _ => this.linkImportedSymbols( css ) )
-      .then( _ => this.extractExports( css ) )
+    this.fetchAllImports( css );
+    this.linkImportedSymbols( css );
+    this.extractExports( css );
   }
 
   fetchAllImports( css ) {
@@ -51,13 +51,12 @@ export default class Parser {
   fetchImport( importNode, relativeTo, depNr ) {
     let file = importNode.selector.match( importRegexp )[1],
       depTrace = this.trace + String.fromCharCode(depNr)
-    return this.pathFetcher( file, relativeTo, depTrace ).then( exports => {
-      importNode.each( decl => {
-        if ( decl.type == 'decl' ) {
-          this.translations[decl.prop] = exports[decl.value]
-        }
-      } )
-      importNode.remove()
-    }, err => console.log( err ) )
+    const exports = this.pathFetcher( file, relativeTo, depTrace );
+    importNode.each( decl => {
+      if ( decl.type == 'decl' ) {
+        this.translations[decl.prop] = exports[decl.value]
+      }
+    } )
+    importNode.remove();
   }
 }
