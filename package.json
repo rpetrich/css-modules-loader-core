@@ -41,7 +41,8 @@
     "loader"
   ],
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "author": "Glen Maddern",
   "license": "ISC",
