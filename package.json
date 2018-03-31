@@ -12,10 +12,12 @@
     "postcss-modules-extract-imports": "1.1.0",
     "postcss-modules-local-by-default": "1.2.0",
     "postcss-modules-scope": "1.1.0",
-    "postcss-modules-values": "1.3.0"
+    "postcss-modules-values": "1.3.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0"
   },
   "devDependencies": {
-    "babel": "5.8.29",
     "babel-eslint": "7.1.0",
     "babelify": "7.3.0",
     "chokidar-cli": "1.1.0",
@@ -24,7 +26,7 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "build": "babel --out-dir lib src",
+    "build": "babel --plugins transform-es2015-modules-commonjs --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
     "test": "mocha --compilers js:babel/register",
     "prepublish": "rm -rf lib/* && npm run build"
