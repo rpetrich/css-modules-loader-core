@@ -29,7 +29,7 @@
     "build": "babel --plugins transform-es2015-modules-commonjs --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
     "test": "mocha --compilers js:babel/register",
-    "prepublish": "rm -rf lib/* && npm run build"
+    "prepare": "rm -rf lib/* && npm run build"
   },
   "repository": {
     "type": "git",
