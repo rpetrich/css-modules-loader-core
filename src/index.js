@@ -15,8 +15,10 @@ export default class Core {
     let parser = new Parser( pathFetcher, trace )
 
     const result = postcss( this.plugins.concat( [parser.plugin] ) )
-      .process( sourceString, { from: "/" + sourcePath } );
-    return { injectableSource: result.css, exportTokens: parser.exportTokens };
+      .process( sourceString, { from: "/" + sourcePath, map: { inline: false, annotation: false } } );
+    const css = result.css;
+    const map = result.map;
+    return { injectableSource: css, exportTokens: parser.exportTokens, map: map ? map.toJSON() : undefined };
   }
 }
 

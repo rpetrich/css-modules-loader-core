@@ -1,3 +1,5 @@
+import { RawSourceMap } from 'source-map';
+
 export default class Core {
 	static values: any;
 	static localByDefault: any;
@@ -5,5 +7,5 @@ export default class Core {
 	static scope: any;
 	static defaultPlugins: any[];
 	constructor(plugins: any[]);
-	load(sourceString: string, sourcePath: string, trace?: any, pathFetcher?: any): { injectableSource: string, exportTokens: { [name: string]: string } };
+	load(sourceString: string, sourcePath: string, trace?: any, pathFetcher?: any): { injectableSource: string, exportTokens: { [name: string]: string }, map: RawSourceMap | undefined };
 }
