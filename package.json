@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "icss-replace-symbols": "^1.1.0",
-    "postcss": "^6.0.21",
+    "postcss": "^6.0.22",
     "postcss-modules-extract-imports": "^1.2.0",
     "postcss-modules-local-by-default": "^1.2.0",
     "postcss-modules-scope": "^1.1.0",
@@ -18,19 +18,18 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "7.1.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
-    "babelify": "7.3.0",
-    "chokidar-cli": "1.1.0",
-    "eslint": "3.10.1",
-    "mocha": "3.1.2"
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "chokidar-cli": "^1.2.0",
+    "eslint": "^4.19.1",
+    "mocha": "^5.1.1"
   },
   "scripts": {
     "lint": "eslint src",
     "build": "babel --plugins transform-es2015-modules-commonjs --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
-    "test": "mocha --compilers js:babel/register",
+    "test": "mocha --compilers js:babel-core/register",
     "prepare": "rm -rf lib/* && npm run build"
   },
   "repository": {
