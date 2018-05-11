@@ -8,9 +8,6 @@
     "test": "test"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "icss-replace-symbols": "^1.1.0",
     "postcss": "^6.0.21",
     "postcss-modules-extract-imports": "^1.2.0",
@@ -20,7 +17,10 @@
     "source-map": "^0.7.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "7.1.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babelify": "7.3.0",
     "chokidar-cli": "1.1.0",
     "eslint": "3.10.1",
